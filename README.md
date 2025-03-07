@@ -12,6 +12,7 @@ Essa Barber is a mobile application designed for barbershop owners to manage cli
 ## Technologies
 
 - React Native + Expo
+- TailwindCSS
 - Firebase (Firestore, Authentication)
 - Twilio (SMS notifications)
 
