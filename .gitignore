@@ -35,9 +35,10 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
-app-example
+/app-example
 app-logo.xcf
 google-services.json
 GoogleService-Info.plist
 old.metro.config.json
 supremebarber.jpeg
+firebaseConfig.ts
