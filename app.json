@@ -1,33 +1,37 @@
 {
   "expo": {
-    "name": "NEWEST_REACT_NATIVE_COURSE",
-    "slug": "NEWEST_REACT_NATIVE_COURSE",
+    "name": "Essa Barber",
+    "slug": "essabarber",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "icon": "",
+    "scheme": "essabarber",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "package": "com.hustlehoff.essabarber",
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "foregroundImage": "",
+        "backgroundColor": "#ffffff",
+        "googleServicesFile": "./google-services.json"
+      },
+      "package": "com.hustlehoff.essabarber"
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": ""
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"

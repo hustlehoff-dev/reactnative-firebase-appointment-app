@@ -4,7 +4,6 @@ import { useFonts } from "expo-font";
 import "../global.css";
 import { useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { AuthProvider } from "@/context/AuthProvider";
 
 SplashScreen.preventAutoHideAsync();
 //screenOptions={{ headerShown: false }}
@@ -30,11 +29,9 @@ const RootLayout = () => {
   if (!fontsLoaded && !error) return null;
 
   return (
-    <AuthProvider>
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <Stack />
-      </GestureHandlerRootView>
-    </AuthProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <Stack screenOptions={{ headerShown: false }} />
+    </GestureHandlerRootView>
   );
 };
 

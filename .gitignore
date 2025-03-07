@@ -36,3 +36,8 @@ yarn-error.*
 *.tsbuildinfo
 
 app-example
+app-logo.xcf
+google-services.json
+GoogleService-Info.plist
+old.metro.config.json
+supremebarber.jpeg
