@@ -1,6 +1,6 @@
 # EssaBarber - Mobile Appointment App
 
-Essa Barber is a mobile application designed for barbershop owners to manage client appointments efficiently.
+Essa Barber is my first commercial product, a mobile application designed for barbershop owners to manage client appointments efficiently.
 
 ## Key Features
 
