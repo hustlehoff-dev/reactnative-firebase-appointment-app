@@ -110,6 +110,9 @@ importers:
       react-native-screens:
         specifier: ~4.4.0
         version: 4.4.0(react-native@0.76.7(@babel/core@7.26.9)(@babel/preset-env@7.26.9(@babel/core@7.26.9))(@types/react@18.3.18)(react@18.3.1))(react@18.3.1)
+      react-native-sms:
+        specifier: ^1.12.0
+        version: 1.12.0
       react-native-url-polyfill:
         specifier: ^2.0.0
         version: 2.0.0(react-native@0.76.7(@babel/core@7.26.9)(@babel/preset-env@7.26.9(@babel/core@7.26.9))(@types/react@18.3.18)(react@18.3.1))
@@ -4405,6 +4408,9 @@ packages:
     peerDependencies:
       react: '*'
       react-native: '*'
+
+  react-native-sms@1.12.0:
+    resolution: {integrity: sha512-tBSD3nKotNTO/lp8UA7iDIpoYUsF+YpRAp+2NDVQYN4e+GZP8s2l5cxAlhnbvch76132RJPgDKsox4MPfW9PGA==}
 
   react-native-swipe-gestures@1.0.5:
     resolution: {integrity: sha512-Ns7Bn9H/Tyw278+5SQx9oAblDZ7JixyzeOczcBK8dipQk2pD7Djkcfnf1nB/8RErAmMLL9iXgW0QHqiII8AhKw==}
@@ -10913,6 +10919,8 @@ snapshots:
       react-freeze: 1.0.4(react@18.3.1)
       react-native: 0.76.7(@babel/core@7.26.9)(@babel/preset-env@7.26.9(@babel/core@7.26.9))(@types/react@18.3.18)(react@18.3.1)
       warn-once: 0.1.1
+
+  react-native-sms@1.12.0: {}
 
   react-native-swipe-gestures@1.0.5: {}
 

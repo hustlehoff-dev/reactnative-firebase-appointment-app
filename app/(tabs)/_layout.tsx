@@ -22,7 +22,7 @@ const TabIcon = ({ icon, color, name, focused }: TabIconProps) => {
       <Text
         className={`${
           focused ? "font-psemibold" : "font-pregular"
-        } whitespace-nowrap text-xs`}
+        } whitespace-nowrap text-xs flex`}
         style={{ color: color }}>
         {name}
       </Text>
@@ -49,13 +49,28 @@ const TabsLayout = () => {
         <Tabs.Screen
           name="home"
           options={{
-            title: "Home",
+            title: "Wizyty",
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
                 icon={icons.home}
                 color={color}
-                name="Home"
+                name="Wizyty"
+                focused={focused}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="create"
+          options={{
+            title: "Create",
+            headerShown: false,
+            tabBarIcon: ({ color, focused }) => (
+              <TabIcon
+                icon={icons.plus}
+                color={color}
+                name="Dodaj"
                 focused={focused}
               />
             ),
@@ -70,28 +85,13 @@ const TabsLayout = () => {
               <TabIcon
                 icon={icons.bookmark}
                 color={color}
-                name="Bookmark"
+                name="Bloki"
                 focused={focused}
               />
             ),
           }}
         />
 
-        <Tabs.Screen
-          name="create"
-          options={{
-            title: "Create",
-            headerShown: false,
-            tabBarIcon: ({ color, focused }) => (
-              <TabIcon
-                icon={icons.plus}
-                color={color}
-                name="Create"
-                focused={focused}
-              />
-            ),
-          }}
-        />
         <Tabs.Screen
           name="profile"
           options={{
@@ -101,7 +101,7 @@ const TabsLayout = () => {
               <TabIcon
                 icon={icons.profile}
                 color={color}
-                name="Profile"
+                name="Klienci"
                 focused={focused}
               />
             ),

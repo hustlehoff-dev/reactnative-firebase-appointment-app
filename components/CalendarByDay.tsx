@@ -10,7 +10,7 @@ import {
   Alert,
 } from "react-native";
 import { Calendar } from "react-native-calendars";
-import { firestore } from "../../firebaseConfig";
+import { firestore } from "../firebaseConfig";
 import {
   addDoc,
   collection,
