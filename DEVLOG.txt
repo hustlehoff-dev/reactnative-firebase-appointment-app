@@ -1,0 +1,16 @@
+10-03-2025 3:07
+
+Calendar.tsx:
+-poprawa styli
+-poprawa sortowania listy wizyt (po godzinie)
+-poprawa usuwania i dzwonienia
+
+AppointmentsToday.tsx:
+-poprawa i finalizacja styli
+-"booked", "confirmed", "cancelled": STATUSY WIZYTY (SMS sync)
+-poprawa usuwania i dzwonienia
+
+Global: Wdrożenie komunikacji SMS
+-zmiana statusu wizyty w locie zaleznie od SMS + powiadomienia
+-FUNKCJA: dodanie listy kontaktów
+-FUNCKJA: dodanie listy blokowanych kontaktów 
