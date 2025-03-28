@@ -14,3 +14,13 @@ Global: Wdrożenie komunikacji SMS
 -zmiana statusu wizyty w locie zaleznie od SMS + powiadomienia
 -FUNKCJA: dodanie listy kontaktów
 -FUNCKJA: dodanie listy blokowanych kontaktów 
+
+
+28.03: PLANNN
+
+TERAZ: 
+-Standalone serwer express.js na seohost
+
+LATER:
+-Landing page
+-CRM/Admin panel dla właścicieli

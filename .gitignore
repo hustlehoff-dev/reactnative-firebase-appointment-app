@@ -36,9 +36,11 @@ yarn-error.*
 *.tsbuildinfo
 
 /app-example
+/app - backup
 app-logo.xcf
 google-services.json
 GoogleService-Info.plist
 old.metro.config.json
 supremebarber.jpeg
 firebaseConfig.ts
+DEVLOG.txt
