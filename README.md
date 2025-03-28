@@ -17,3 +17,7 @@ Essa Barber is my first commercial product, a mobile application designed for ba
 - Twilio (SMS notifications)
 
 Project is under development.
+
+At the moment:
+
+- Implementation of Express.js standalone server for sms/appointment confirmations handling.
