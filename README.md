@@ -18,7 +18,6 @@ The project will offer subscription model for owners of service premises in exch
 
 - Blacklist: lets the user ban problematic contacts (those who cancel or no-show).
 - Phone contacts sync: integrates the app with the user's phonebook. Allows user to add new booking in no time (without need to input clients data by hand).
--
 
 ## Key Features
 
