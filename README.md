@@ -37,7 +37,7 @@ The project will offer subscription model for owners of service premises in exch
 
 - React Native + Expo
 - TailwindCSS
-- FirebaseAPI (Firestore, Authentication)
+- FirebaseAPI (Firestore, Authentication, AdminSDK)
 - TwilioAPI (SMS notifications)
 - ExpressJS backend (handling SMS notifications, reminders and booking status)
 
