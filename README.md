@@ -4,6 +4,12 @@ Essa Barber is my first commercial product, a mobile application designed for ba
 
 The project will offer subscription model for owners of service premises in exchange of the most convienient customer relation management system in the industry.
 
+## Screenshots
+
+![App's hello page](image.png)
+![App's appointment calendar](image-1.png)
+![App's agenda view](image-2.png)
+
 ## Current Project State (updated: 4.04.2025 2:24CET)
 
 **What's working:**
