@@ -24,3 +24,7 @@ TERAZ:
 LATER:
 -Landing page
 -CRM/Admin panel dla właścicieli
+
+3.04:
+
+- konfiguracja endpointow na serwerze expressJS

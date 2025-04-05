@@ -38,6 +38,7 @@ yarn-error.*
 /app-example
 /app - backup
 /api/backend/.env
+/api
 app-logo.xcf
 google-services.json
 GoogleService-Info.plist

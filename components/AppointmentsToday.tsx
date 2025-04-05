@@ -5,11 +5,11 @@ import {
   SectionListRenderItemInfo,
   Linking,
   Button,
+  TouchableOpacity,
 } from "react-native";
 import { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { AgendaList, CalendarProvider } from "react-native-calendars";
-import { format } from "date-fns";
 import {
   collection,
   where,
@@ -21,24 +21,6 @@ import {
 } from "firebase/firestore";
 import { firestore } from "../firebaseConfig";
 
-// Po zmianie daty w home.tsx, uzyc zeby aktualizowac dany dzień i wyswietlac agende wizyt dla konkretnego dnia
-const today = format(new Date(), "yyyy-MM-dd");
-
-/*const fetchAppointmentsForDay = async () => {
-  const appointmentsRef = collection(firestore, "appointments");
-
-  const q = query(
-    appointmentsRef,
-    where("appointmentDate", "==", day),
-    orderBy("appointmentDate", "asc")
-  );
-
-  try {
-    const querySnapshot = await getDocs(q);
-  } catch (err){
-
-  }
-};*/
 interface Appointment {
   id: string;
   appointmentDate: string;
@@ -131,13 +113,53 @@ const AppointmentsToday = ({ selectedDate }: selDateType) => {
     console.log("Rendering item:", item);
     return (
       <View style={styles.appointmentItem}>
-        <Text style={styles.appointmentText}>{item.clientName}</Text>
-        <Text style={styles.appointmentText}>{item.clientPhone}</Text>
-        <Text style={styles.timeText}>{item.time}</Text>
-        <Text style={styles.statusText}>{item.status}</Text>
+        <View className="flex flex-row justify-between">
+          <View className="flex justify-center ">
+            <Text style={styles.appointmentText}>{item.clientName}</Text>
+            <Text style={styles.appointmentText}>{item.clientPhone}</Text>
+          </View>
+          <View className="flex justify-center items-end ">
+            <Text
+              style={[
+                styles.statusText,
+                item.status === "booked" && { color: "#FF7F00" },
+                item.status === "confirmed" && { color: "green" },
+                item.status === "cancelled" && { color: "red" },
+              ]}>
+              {item.status === "booked"
+                ? "Umówiona"
+                : item.status === "confirmed"
+                ? "Potwierdzona"
+                : item.status === "cancelled"
+                ? "Anulowana"
+                : "Status nieznany"}
+            </Text>
+            <Text
+              style={[
+                styles.timeText,
+                item.status === "booked" && { color: "#FF7F00" },
+                item.status === "confirmed" && { color: "green" },
+                item.status === "cancelled" && { color: "red" },
+              ]}>
+              {item.time}
+            </Text>
+          </View>
+        </View>
         <View style={styles.buttonContainer}>
-          <Button title="Call" onPress={() => handleCall(item.clientPhone)} />
-          <Button title="Delete" onPress={() => handleDelete(item.id)} />
+          <TouchableOpacity
+            className="py-2 px-5 bg-secondary-100 rounded-lg"
+            onPress={() => handleCall(item.clientPhone)}>
+            <Text className="text-black font-semibold text-lg uppercase w-full">
+              Dzwoń
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            className="py-2 px-4 bg-secondary-100 rounded-lg"
+            onPress={() => handleDelete(item.id)}>
+            <Text className="text-black font-semibold text-lg uppercase w-full">
+              Usuń
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     );
@@ -145,10 +167,7 @@ const AppointmentsToday = ({ selectedDate }: selDateType) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <Text className="text-white">
-        {loading ? "Loading..." : "Appointments"}
-      </Text>
-      <CalendarProvider date={today}>
+      <CalendarProvider date={selectedDate}>
         <AgendaList sections={sections} renderItem={renderAgendaItem} />
       </CalendarProvider>
     </SafeAreaView>
@@ -184,20 +203,19 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   appointmentText: {
-    fontSize: 16,
-    fontFamily: "pregular",
-    color: "#FFFFFF", // Jasny tekst dla czytelności
+    fontSize: 24,
+    fontWeight: 600,
+    color: "#c2c2c2", // Jasny tekst dla czytelności
     marginBottom: 2,
   },
   timeText: {
-    fontSize: 14,
-    fontFamily: "pmedium",
+    fontSize: 24,
+    fontWeight: 600,
     color: "#FFA001", // Akcentowany kolor dla godziny wizyty
   },
   statusText: {
-    fontSize: 14,
-    fontFamily: "pmedium",
-    color: "#FF7F00", // Secondary 100 dla statusu
+    fontSize: 24,
+    fontWeight: 600,
   },
   buttonContainer: {
     flexDirection: "row",

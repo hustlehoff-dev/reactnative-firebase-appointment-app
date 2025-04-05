@@ -102,6 +102,8 @@ const bookAppointment = async (
 ) => {
   try {
     const appointmentRef = collection(firestore, "appointments");
+    // TO DO: backend should handle all shit, app should contact only backend maybe.
+    // Post to firestore
     await addDoc(appointmentRef, {
       clientName,
       clientPhone,
@@ -110,6 +112,21 @@ const bookAppointment = async (
       status: "booked",
       createdAt: new Date().toString(),
     });
+
+    // Inform backend
+    await fetch("http://api.essabook.pl/add-appointment", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        clientName,
+        clientPhone,
+        appointmentDate: `${selectedDate}`,
+        time: `${selectedTime}`,
+      }),
+    });
+
     alert("Wizyta została zarezerwowana!");
     setModalVisible(false);
     fetchAppointments(selectedDate, setAppointments); // Przekazujemy oba argumenty do fetchAppointments
