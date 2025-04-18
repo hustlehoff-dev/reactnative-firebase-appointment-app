@@ -1,9 +1,11 @@
-import { StyleSheet, Text, View } from "react-native";
-import { useEffect, useState } from "react";
+import { Button, Platform, StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import HomeWidgets from "@/components/homewidgets";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { ScrollView } from "react-native-gesture-handler";
 import AppointmentsToday from "@/components/AppointmentsToday";
 import { format } from "date-fns";
-import DateTimePicker from "@react-native-community/datetimepicker";
+import { pl } from "date-fns/locale";
 
 const getCurrentDate = () => {
   const now = new Date();
@@ -14,12 +16,11 @@ const getCurrentDate = () => {
     now.setDate(now.getDate() + 1); // next day
   }
   // If before 18, set today
-  return format(now, "yyyy-MM-dd");
+  return now;
 };
 
 const home = () => {
-  const [selectedDate, setSelectedDate] = useState<string>(getCurrentDate());
-  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<Date>(getCurrentDate());
 
   useEffect(() => {
     setSelectedDate(getCurrentDate());
@@ -28,7 +29,6 @@ const home = () => {
   return (
     <SafeAreaView className="bg-primary h-full px-4 ">
       <AppointmentsToday selectedDate={selectedDate} />
-      {/* Brak pickera, na razie data tylko dynamicznie */}
     </SafeAreaView>
   );
 };

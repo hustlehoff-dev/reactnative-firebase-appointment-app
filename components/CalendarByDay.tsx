@@ -21,6 +21,7 @@ import {
   doc,
 } from "firebase/firestore";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Contacts from "react-native-contacts"; // Import contacts library
 
 type Appointment = {
   id: string;
@@ -104,17 +105,19 @@ const bookAppointment = async (
     const appointmentRef = collection(firestore, "appointments");
     // TO DO: backend should handle all shit, app should contact only backend maybe.
     // Post to firestore
+    const fullDateTime = new Date(`${selectedDate}T${selectedTime}`);
     await addDoc(appointmentRef, {
       clientName,
       clientPhone,
       appointmentDate: `${selectedDate}`,
       time: `${selectedTime}`,
+      fullDateTime: fullDateTime,
       status: "booked",
       createdAt: new Date().toString(),
     });
 
-    // Inform backend
-    await fetch("http://api.essabook.pl/add-appointment", {
+    // Sync with backend
+    await fetch("https://api.essabook.pl/add-appointment", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -158,6 +161,8 @@ const AppointmentScheduler = () => {
   const [clientPhone, setClientPhone] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [appointments, setAppointments] = useState<Appointment[]>([]);
+  const [contacts, setContacts] = useState<any[]>([]); // Contacts state
+  const [searchQuery, setSearchQuery] = useState(""); // Search query for filtering contacts
 
   const weekDates = getWeekDates();
 
@@ -167,9 +172,23 @@ const AppointmentScheduler = () => {
     }
   }, [selectedDate]);
 
+  useEffect(() => {
+    // Fetch contacts from phone book
+    Contacts.getAll()
+      .then((contactsList) => {
+        setContacts(contactsList);
+      })
+      .catch((e) => console.error("Error fetching contacts", e));
+  }, []);
+
   const handleDayPress = (day: Day) => {
     setSelectedDate(day.dateString); // `dateString` is a string of the selected date
   };
+
+  // Filter contacts based on the search query
+  const filteredContacts = contacts.filter((contact) =>
+    contact.displayName.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <SafeAreaView className="bg-primary h-full">
@@ -277,18 +296,54 @@ const AppointmentScheduler = () => {
                 onChangeText={setClientPhone}
                 className="bg-gray-200 p-2 rounded-lg mt-2"
               />
+
+              {/* Filtered contacts search */}
+              <TextInput
+                placeholder="Szukaj kontaktów"
+                value={searchQuery}
+                onChangeText={setSearchQuery}
+                className="bg-gray-200 p-2 rounded-lg mt-2"
+              />
+
+              <ScrollView>
+                {filteredContacts.map((contact) => (
+                  <TouchableOpacity
+                    key={contact.recordID}
+                    onPress={() => {
+                      setClientName(contact.displayName);
+                      setClientPhone(contact.phoneNumbers[0]?.number || "");
+                    }}
+                    style={{
+                      padding: 10,
+                      backgroundColor: "#1E1E1E",
+                      marginBottom: 5,
+                      borderRadius: 5,
+                    }}>
+                    <Text className="text-white">{contact.displayName}</Text>
+                  </TouchableOpacity>
+                ))}
+              </ScrollView>
+
               <Button
                 title="Zarezerwuj wizytę"
-                onPress={() =>
+                onPress={() => {
+                  if (!clientName.trim() || !clientPhone.trim()) {
+                    Alert.alert(
+                      "Uzupełnij wszystkie pola",
+                      "Wpisz imię i numer telefonu klienta."
+                    );
+                    return;
+                  }
+
                   bookAppointment(
-                    selectedDate!, // Przekazujemy selectedDate
-                    selectedTime, // Przekazujemy selectedTime
-                    clientName, // Przekazujemy clientName
-                    clientPhone, // Przekazujemy clientPhone
-                    setModalVisible, // Przekazujemy setModalVisible
-                    setAppointments // Przekazujemy setAppointments
-                  )
-                }
+                    selectedDate!,
+                    selectedTime,
+                    clientName,
+                    clientPhone,
+                    setModalVisible,
+                    setAppointments
+                  );
+                }}
               />
             </View>
           </Modal>

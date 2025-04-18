@@ -6,7 +6,9 @@ import {
   Linking,
   Button,
   TouchableOpacity,
+  Alert,
 } from "react-native";
+import { format } from "date-fns";
 import { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { AgendaList, CalendarProvider } from "react-native-calendars";
@@ -31,7 +33,7 @@ interface Appointment {
   time: string;
 }
 interface selDateType {
-  selectedDate: string;
+  selectedDate: Date;
 }
 
 const AppointmentsToday = ({ selectedDate }: selDateType) => {
@@ -44,8 +46,8 @@ const AppointmentsToday = ({ selectedDate }: selDateType) => {
 
     const q = query(
       appointmentsRef,
-      where("appointmentDate", "==", selectedDate),
-      orderBy("appointmentDate", "asc")
+      where("appointmentDate", "==", format(selectedDate, "yyyy-MM-dd")),
+      orderBy("fullDateTime", "asc")
     );
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -58,10 +60,10 @@ const AppointmentsToday = ({ selectedDate }: selDateType) => {
       });
 
       // Debugowanie
-      console.log("Fetched appointments:", fetchedAppointments);
+      /*console.log("Fetched appointments:", fetchedAppointments);
       if (fetchedAppointments.length === 0) {
         console.log("No appointments found for selectedDate:", selectedDate);
-      }
+      }*/
 
       // Format appointments into sections, update state
       const groupedAppointments: { [key: string]: Appointment[] } =
@@ -79,7 +81,7 @@ const AppointmentsToday = ({ selectedDate }: selDateType) => {
         title: date,
         data: groupedAppointments[date],
       }));
-
+      //console.log("Sections data:", sectionsData);
       setSections(sectionsData);
       setAppointments(fetchedAppointments);
       setLoading(false);
@@ -89,13 +91,17 @@ const AppointmentsToday = ({ selectedDate }: selDateType) => {
     return () => unsubscribe();
   }, [selectedDate]);
 
-  // Visit Call
+  ///////////////////
+  // Call
+
   const handleCall = (phonenumber: string) => {
     const url = `tel:${phonenumber}`;
     Linking.openURL(url).catch((err) => console.error("Błąd połączenia:", err));
   };
 
-  // Visit Delete
+  ///////////////////
+  // Delete
+
   const handleDelete = (appointmentId: string) => {
     const appointmentRef = doc(firestore, "appointments", appointmentId);
     deleteDoc(appointmentRef)
@@ -107,10 +113,22 @@ const AppointmentsToday = ({ selectedDate }: selDateType) => {
       });
   };
 
+  const isPastAppointment = (appointment: Appointment) => {
+    const now = new Date();
+
+    const [hours, minutes] = appointment.time.split(":").map(Number);
+
+    const appointmentTime = new Date(hours, minutes);
+    return console.log(appointmentTime);
+  };
+
+  ////////////////////////////
+  // Agenda Item Renderer
+
   const renderAgendaItem = ({
     item,
   }: SectionListRenderItemInfo<Appointment>) => {
-    console.log("Rendering item:", item);
+    //console.log("Rendering item:", item);
     return (
       <View style={styles.appointmentItem}>
         <View className="flex flex-row justify-between">
@@ -155,7 +173,16 @@ const AppointmentsToday = ({ selectedDate }: selDateType) => {
           </TouchableOpacity>
           <TouchableOpacity
             className="py-2 px-4 bg-secondary-100 rounded-lg"
-            onPress={() => handleDelete(item.id)}>
+            onPress={() =>
+              Alert.alert(`Usuń wizyte ${item.clientName}`, `Napewno?`, [
+                { text: "Anuluj", style: "cancel" },
+                {
+                  text: "Usuń",
+                  onPress: () => handleDelete(item.id),
+                  style: "destructive",
+                },
+              ])
+            }>
             <Text className="text-black font-semibold text-lg uppercase w-full">
               Usuń
             </Text>
@@ -167,8 +194,14 @@ const AppointmentsToday = ({ selectedDate }: selDateType) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <CalendarProvider date={selectedDate}>
-        <AgendaList sections={sections} renderItem={renderAgendaItem} />
+      <CalendarProvider date={format(selectedDate, "yyyy-MM-dd")}>
+        <AgendaList
+          sections={sections}
+          renderItem={renderAgendaItem}
+          sectionStyle={{
+            backgroundColor: "#121212",
+          }}
+        />
       </CalendarProvider>
     </SafeAreaView>
   );
@@ -203,18 +236,17 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   appointmentText: {
-    fontSize: 24,
-    fontWeight: 600,
-    color: "#c2c2c2", // Jasny tekst dla czytelności
+    fontSize: 18,
+    color: "#f2f2f2", // Jasny tekst dla czytelności
     marginBottom: 2,
   },
   timeText: {
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: 600,
     color: "#FFA001", // Akcentowany kolor dla godziny wizyty
   },
   statusText: {
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: 600,
   },
   buttonContainer: {

@@ -40,7 +40,7 @@ const TabsLayout = () => {
           tabBarShowLabel: false,
           tabBarStyle: {
             backgroundColor: "#121212",
-            borderTopWidth: 1,
+            borderTopWidth: 0.5,
             borderTopColor: "#232533",
             height: 64,
             paddingTop: 16,
@@ -76,6 +76,7 @@ const TabsLayout = () => {
             ),
           }}
         />
+        {/* 
         <Tabs.Screen
           name="bookmark"
           options={{
@@ -106,7 +107,7 @@ const TabsLayout = () => {
               />
             ),
           }}
-        />
+        />*/}
       </Tabs>
     </>
   );
