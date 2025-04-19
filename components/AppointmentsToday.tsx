@@ -117,9 +117,12 @@ const AppointmentsToday = ({ selectedDate }: selDateType) => {
     const now = new Date();
 
     const [hours, minutes] = appointment.time.split(":").map(Number);
+    const [year, month, day] = appointment.appointmentDate
+      .split("-")
+      .map(Number);
 
-    const appointmentTime = new Date(hours, minutes);
-    return console.log(appointmentTime);
+    const appointmentTime = new Date(year, month - 1, day, hours, minutes);
+    return appointmentTime < now;
   };
 
   ////////////////////////////
@@ -129,11 +132,18 @@ const AppointmentsToday = ({ selectedDate }: selDateType) => {
     item,
   }: SectionListRenderItemInfo<Appointment>) => {
     //console.log("Rendering item:", item);
+    const isPast = isPastAppointment(item);
     return (
-      <View style={styles.appointmentItem}>
+      <View
+        style={[
+          styles.appointmentItem,
+          isPast && { opacity: 0.3, borderColor: "#444" },
+        ]}>
         <View className="flex flex-row justify-between">
           <View className="flex justify-center ">
-            <Text style={styles.appointmentText}>{item.clientName}</Text>
+            <Text style={[styles.appointmentText, isPast && {}]}>
+              {item.clientName}
+            </Text>
             <Text style={styles.appointmentText}>{item.clientPhone}</Text>
           </View>
           <View className="flex justify-center items-end ">
@@ -165,6 +175,7 @@ const AppointmentsToday = ({ selectedDate }: selDateType) => {
         </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
+            style={isPast && { backgroundColor: "grey" }}
             className="py-2 px-5 bg-secondary-100 rounded-lg"
             onPress={() => handleCall(item.clientPhone)}>
             <Text className="text-black font-semibold text-lg uppercase w-full">
@@ -172,6 +183,7 @@ const AppointmentsToday = ({ selectedDate }: selDateType) => {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
+            style={isPast && { backgroundColor: "grey" }}
             className="py-2 px-4 bg-secondary-100 rounded-lg"
             onPress={() =>
               Alert.alert(`Usuń wizyte ${item.clientName}`, `Napewno?`, [
