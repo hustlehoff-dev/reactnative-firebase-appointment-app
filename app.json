@@ -11,7 +11,11 @@
     "ios": {
       "supportsTablet": true,
       "package": "com.hustlehoff.essabarber",
-      "googleServicesFile": "./GoogleService-Info.plist"
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "bundleIdentifier": "com.hustle.essabook",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -40,6 +44,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "b7be8b7f-259b-4971-baa8-927662fa87a4"
+      }
     }
   }
 }

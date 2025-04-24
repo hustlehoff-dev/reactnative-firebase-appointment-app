@@ -1,4 +1,9 @@
-# EssaBarber - Mobile Appointment App
+# EssaBarber - Mobile Appointment App (Discontinued)
+
+////////////////////////
+X The project development as mobile app is discontinued. X
+X Developing it as a web application here: https://github.com/hustlehoff-dev/essabook-react-typescript-firebase-appointmentapp
+////////////////////////
 
 Essa Barber is my first commercial product, a mobile application designed for barbershop owners to manage client appointments efficiently.
 
